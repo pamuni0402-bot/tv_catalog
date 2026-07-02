@@ -80,19 +80,33 @@
 **Para** poder acceder al sistema de series de televisión.
 
 ### Criterios de aceptación
-- El usuario debe ingresar:
-  - Nombre
-  - Correo electrónico
-  - Contraseña
-  - Confirmar contraseña
-- El correo no debe estar registrado.
-- La contraseña debe coincidir con la confirmación.
-- Al registrarse correctamente se mostrará el mensaje:
-  **"Registro exitoso".**
+Scenario: Registro exitoso 
+
+Given que el usuario se encuentra en la pantalla de registro
+
+When ingresa un nombre válido, un correo no registrado, una contraseña y la confirma correctamente 
+
+Then el sistema crea la cuenta y muestra el mensaje "Registro exitoso"
+
+Scenario: Correo ya registrado
+
+Given que el correo ya existe en el sistema
+
+When el usuario intenta registrarse con ese correo 
+
+Then el sistema muestra el mensaje "El correo ya está registrado"
+
+Scenario: Contraseñas diferentes
+
+Given que el usuario está llenando el formulario de registro 
+
+When la contraseña y la confirmación no coinciden
+
+Then el sistema muestra el mensaje "Las contraseñas no coinciden"
 
 ---
 
-## EPIC 6: Inicio de Sesión
+## EPIC 7: Inicio de Sesión
 
 ## Historia de Usuario
 **Como** usuario registrado  
