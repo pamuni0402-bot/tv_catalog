@@ -1,4 +1,4 @@
-## TV Catalog
+## Backlog: TV Catalog
 
 ## EPIC 1: Gestión de Series
 **Objetivo:** Administrar el catálogo de series.
@@ -82,31 +82,21 @@
 ### Criterios de aceptación
 Scenario: Registro exitoso 
 
-Given que el usuario se encuentra en la pantalla de registro
 
-When ingresa un nombre válido, un correo no registrado, una contraseña y la confirma correctamente 
-
-Then el sistema crea la cuenta y muestra el mensaje "Registro exitoso"
-
-
+Scenario: Registro exitoso
+Given que el usuario está en registro
+When completa los datos y confirma la contraseña 
+Then el sistema crea la cuenta y muestra "Registro exitoso"
 
 Scenario: Correo ya registrado
-
-Given que el correo ya existe en el sistema
-
-When el usuario intenta registrarse con ese correo 
-
-Then el sistema muestra el mensaje "El correo ya está registrado"
-
-
+Given que el correo ya existe
+When el usuario intenta registrarse 
+Then el sistema muestra "El correo ya está registrado"
 
 Scenario: Contraseñas diferentes
-
-Given que el usuario está llenando el formulario de registro 
-
-When la contraseña y la confirmación no coinciden
-
-Then el sistema muestra el mensaje "Las contraseñas no coinciden"
+Given que el usuario llena el formulario 
+When las contraseñas no coinciden
+Then el sistema muestra "Las contraseñas no coinciden"
 
 ---
 
