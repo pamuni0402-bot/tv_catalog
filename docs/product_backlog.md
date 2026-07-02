@@ -88,6 +88,8 @@ When ingresa un nombre válido, un correo no registrado, una contraseña y la co
 
 Then el sistema crea la cuenta y muestra el mensaje "Registro exitoso"
 
+
+
 Scenario: Correo ya registrado
 
 Given que el correo ya existe en el sistema
@@ -95,6 +97,8 @@ Given que el correo ya existe en el sistema
 When el usuario intenta registrarse con ese correo 
 
 Then el sistema muestra el mensaje "El correo ya está registrado"
+
+
 
 Scenario: Contraseñas diferentes
 
