@@ -1,56 +1,50 @@
-# Formato de codigo 
+# Code Format 
 ```mermaid
 erDiagram
+    USER ||--o{ RATING : "registers"
+    USER ||--o{ FAVORITE : "saves"
+    TV_SHOW ||--o{ RATING : "receives"
+    TV_SHOW ||--o{ FAVORITE : "belongs_to"
+    TV_SHOW }o--o{ GENRE : "has"
 
-    USUARIO ||--o{ CALIFICACION : "registra"
-    USUARIO ||--o{ FAVORITO : "guarda"
-    SERIE ||--o{ CALIFICACION : "recibe"
-    SERIE ||--o{ FAVORITO : "pertenece_a"
-    SERIE }o--o{ GENERO : "tiene"
-
-    USUARIO {
-        string id_usuario PK
-        string nombre
-        string correo
-        string contrasena_hash
-        date fecha_registro
+    USER {
+        string user_id PK
+        string name
+        string email
+        string password_hash
+        date registration_date
     }
 
-    SERIE {
-        string id_serie PK
-        string nombre
-        string sinopsis
-        int anio_lanzamiento
-        float promedio_calificacion
+    TV_SHOW {
+        string show_id PK
+        string name
+        string synopsis
+        int release_year
+        float average_rating
     }
 
-    GENERO {
-        string id_genero PK
-        string nombre
+    GENRE {
+        string genre_id PK
+        string name
     }
 
-    CALIFICACION {
-        string id_calificacion PK
-        string id_usuario FK
-        string id_serie FK
-        int estrellas "1 a 5"
-        date fecha
+    RATING {
+        string rating_id PK
+        string user_id FK
+        string show_id FK
+        int stars "1 to 5"
+        date created_at
     }
 
-    FAVORITO {
-        string id_favorito PK
-        string id_usuario FK
-        string id_serie FK
-        date fecha_agregado
+    FAVORITE {
+        string favorite_id PK
+        string user_id FK
+        string show_id FK
+        date added_at
     }
 ```
-# Descripción 
-### USUARIO (EPIC 6 y 7): Almacena las credenciales y datos básicos generados en el registro e inicio de sesión.
-
-### SERIE (EPIC 1 y 2): Contiene los datos requeridos por el catálogo. El atributo promedio_calificacion resuelve la HU-04.2, calculándose y actualizándose cada vez que se agregue una calificación.
-
-### GENERO (EPIC 3): Permite categorizar las series. En Firestore, la relación de muchos a muchos (SERIE }o--o{ GENERO) se puede resolver de forma óptima guardando un Array de IDs de géneros directamente dentro del documento de la Serie.
-
-### CALIFICACION (EPIC 4): Entidad intermedia que rompe la relación muchos a muchos entre Usuarios y Series. Registra cuántas estrellas asignó un usuario específico a una serie.
-
-### FAVORITO (EPIC 5): Permite mapear qué series ha guardado el usuario en "Mi Lista". En un esquema puro de Firestore, esto se podría estructurar como una subcolección dentro de USUARIO llamada favoritos.
+### USER (EPIC 6 & 7): Stores credentials and basic data generated during user registration and login.
+### TV_SHOW (EPIC 1 & 2): Contains the data required for the catalog. The average_rating attribute satisfies HU-04.2, which is calculated and updated automatically every time a new rating is added.
+### GENRE (EPIC 3): Allows categorizing TV shows. In Firestore, the many-to-many relationship (TV_SHOW }o--o{ GENRE) can be optimally resolved by storing an Array of genre IDs directly within the TV Show document.
+### RATING (EPIC 4): An intermediary entity that breaks the many-to-many relationship between Users and TV Shows. It tracks how many stars a specific user assigned to a particular TV show.
+### FAVORITE (EPIC 5): Maps which TV shows a user has saved to "My List". In a pure Firestore schema, this can be structured as a subcollection within USER named favorites.
