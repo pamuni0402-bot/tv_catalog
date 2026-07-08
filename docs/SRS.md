@@ -1,83 +1,83 @@
-# Especificación de Requisitos de Software (SRS)
-## Proyecto: TV Catalog
+# Software Requirements Specification (SRS)
+## Project: TV Catalog
 
 ---
 
-## 1. Introducción
-Este documento detalla los requisitos funcionales, no funcionales y el stack tecnológico para el desarrollo de la aplicación móvil **TV Catalog**. La aplicación está diseñada para que los usuarios puedan explorar, buscar, organizar y hacer seguimiento de sus series de televisión favoritas, ofreciendo una experiencia fluida e interactiva en tiempo real.
+## 1. Introduction
+This document details the functional and non-functional requirements, as well as the technological stack for the development of the **TV Catalog** mobile application. The application is designed to allow users to explore, search, organize, and track their favorite television series, offering a smooth and interactive real-time experience.
 
 ---
 
-## 2. Stack Tecnológico
+## 2. Tech Stack
 
-La arquitectura de la aplicación se basará en una solución moderna, multiplataforma y *serverless*, optimizada para el rendimiento multimedia y la actualización de datos constante.
+The application architecture will be based on a modern, cross-platform, and serverless solution, optimized for multimedia performance and constant data synchronization.
 
-| Componente | Tecnología | Razón de Selección |
+| Component | Technology | Rationale |
 | :--- | :--- | :--- |
-| **Frontend Móvil** | Dart / Flutter | Permite un desarrollo multiplataforma (iOS y Android) con un solo código base, garantizando animaciones fluidas (60/120 fps) ideales para navegación de catálogos visuales. |
-| **Base de Datos** | Firebase Cloud Firestore | Base de Datos NoSQL que permite almacenar la información de las series, temporadas, episodios y el progreso del usuario con sincronización instantánea. |
-| **Autenticación** | Firebase Authentication | Manejo seguro de sesiones (Email, Google, Apple) para que el usuario mantenga su lista de favoritos sincronizada en cualquier dispositivo. |
-| **Almacenamiento** | Firebase Cloud Storage | Almacenamiento optimizado para imágenes de perfil de usuarios y assets multimedia si es requerido. |
-| **Integración de Datos** | API Externa (Opcional, ej. TMDB) | Consumo de servicios REST para alimentar el catálogo con miles de series actualizadas, conectándose mediante Flutter (paquete `http` o `dio`). |
+| **Mobile Frontend** | Dart / Flutter | Enables cross-platform development (iOS and Android) with a single codebase, guaranteeing fluid animations (60/120 fps) ideal for navigating visual catalogs. |
+| **Database** | Firebase Cloud Firestore | NoSQL database that allows storing information about series, seasons, episodes, and user progress with instant synchronization. |
+| **Authentication** | Firebase Authentication | Secure session management (Email, Google, Apple) so users can keep their favorites list synchronized across any device. |
+| **Storage** | Firebase Cloud Storage | Optimized storage for user profile pictures and multimedia assets if required. |
+| **Data Integration** | External API (Optional, e.g., TMDB) | REST service consumption to feed the catalog with thousands of updated series, connecting through Flutter (using `http` or `dio` packages). |
 
 ---
 
-## 3. Requisitos Funcionales (RF)
+## 3. Functional Requirements (FR)
 
-### RF01: Gestión de Usuarios y Perfiles
-* **RF01.1:** El sistema debe permitir el registro e inicio de sesión mediante correo/contraseña y cuentas de Google/Apple.
-* **RF01.2:** El sistema debe permitir al usuario personalizar su perfil (nombre, foto y géneros de series favoritos).
-* **RF01.3:** Los datos de personalización del usuario deben almacenarse de forma persistente en Firestore.
+### FR01: User Management and Profiles
+* **FR01.1:** The system must allow user registration and login via email/password and Google/Apple accounts.
+* **FR01.2:** The system must allow users to customize their profile (name, photo, and favorite series genres).
+* **FR01.3:** User customization data must be persistently stored in Firestore.
 
-### RF02: Catálogo y Exploración de Series
-* **RF02.1:** La aplicación debe mostrar una pantalla principal con secciones organizadas: "Series Tendencia", "Estrenos", "Más Populares" y "Recomendadas por Género".
-* **RF02.2:** El sistema debe permitir visualizar el detalle de cada serie, incluyendo: sinopsis, póster, año de lanzamiento, calificación, elenco, y lista de temporadas/episodios.
-* **RF02.3:** El sistema debe permitir la reproducción de trailers de las series (mediante reproductores integrados en Flutter).
+### FR02: Catalog and Series Exploration
+* **FR02.1:** The application must display a main screen with organized sections: "Trending Series", "New Releases", "Most Popular", and "Recommended by Genre".
+* **FR02.2:** The system must allow viewing the details of each series, including: synopsis, poster, release year, rating, cast, and a list of seasons/episodes.
+* **FR02.3:** The system must allow the playback of series trailers (using embedded players in Flutter).
 
-### RF03: Motor de Búsqueda y Filtros
-* **RF03.1:** El usuario debe poder buscar series por título en tiempo real a través de una barra de búsqueda.
-* **RF03.2:** El sistema debe ofrecer filtros avanzados por género, año de emisión, estado de la serie (En emisión / Finalizada) y plataforma de streaming original.
+### FR03: Search Engine and Filters
+* **FR03.1:** Users must be able to search for series by title in real time through a search bar.
+* **FR03.2:** The system must offer advanced filters by genre, broadcast year, series status (Airing / Ended), and original streaming platform.
 
-### RF04: Gestión de Favoritos y Seguimiento ("Mi Lista")
-* **RF04.1:** El usuario debe poder marcar series como "Favoritas" o agregarlas a una lista de "Por ver".
-* **RF04.2:** El sistema debe permitir al usuario marcar episodios individuales como "Vistos" para llevar un control del progreso de la temporada.
-* **RF04.3:** La lista de seguimiento y progreso de episodios debe sincronizarse automáticamente en la cuenta de Firebase del usuario.
+### FR04: Favorites Management and Tracking ("My List")
+* **FR04.1:** Users must be able to mark series as "Favorites" or add them to a "Watchlist".
+* **FR04.2:** The system must allow users to mark individual episodes as "Watched" to keep track of season progress.
+* **FR04.3:** The watchlist and episode progress must automatically synchronize with the user's Firebase account.
 
-### RF05: Notificaciones push
-* **RF05.1:** El sistema debe enviar notificaciones push automáticas (vía Firebase Cloud Messaging) cuando se estrene un nuevo episodio de una serie que el usuario tenga en su lista de favoritos.
-
----
-
-## 4. Requisitos No Funcionales (RNF)
-
-### RNF01: Rendimiento y Experiencia de Usuario (UX)
-* **RNF01.1:** El catálogo de imágenes (pósters y banners) debe implementar una estrategia de *lazy loading* y caché local de imágenes (usando `cached_network_image` en Flutter) para evitar el consumo excesivo de datos.
-* **RNF01.2:** La navegación entre pantallas y el scroll de las listas de series deben mantener una tasa constante de 60fps.
-
-### RNF02: Seguridad y Reglas de Acceso
-* **RNF02.1:** El acceso a la lectura y escritura de las listas de favoritos e historial de visualización en Firestore debe estar restringido estrictamente al usuario propietario mediante **Firebase Security Rules**.
-* **RNF02.2:** Las llaves de API externas (si se usan) deben mantenerse protegidas y no exponerse directamente en el código fuente público.
-
-### RNF03: Disponibilidad y Soporte Offline
-* **RNF03.1:** La aplicación debe permitir el acceso a "Mi Lista" y al progreso de las series guardadas incluso si el dispositivo no cuenta con conexión a Internet, sincronizando los cambios pendientes con Firestore tan pronto como se recupere la conectividad.
-
-### RNF04: Compatibilidad
-* **RNF04.1:** La aplicación móvil debe ser totalmente responsiva y compatible con teléfonos inteligentes Android (versión 8.0 o posterior) e iOS (versión 15 o posterior).
+### FR05: Push Notifications
+* **FR05.1:** The system must send automatic push notifications (via Firebase Cloud Messaging) when a new episode of a series that the user has in their favorites list is released.
 
 ---
 
-## 5. Estructura del Proyecto (Flutter)
+## 4. Non-Functional Requirements (NFR)
 
-Para asegurar la escalabilidad de **TV Catalog**, se estructurará el frontend utilizando arquitectura de capas orientada a funciones (Feature-First) junto con un gestor de estado eficiente (*Bloc* o *Riverpod*):
+### NFR01: Performance and User Experience (UX)
+* **NFR01.1:** The image catalog (posters and banners) must implement a lazy loading strategy and local image caching (using `cached_network_image` in Flutter) to avoid excessive mobile data consumption.
+* **NFR01.2:** Navigation between screens and scrolling through series lists must maintain a constant frame rate of 60fps.
+
+### NFR02: Security and Access Rules
+* **NFR02.1:** Read and write access to favorite lists and viewing history in Firestore must be strictly restricted to the owner user via **Firebase Security Rules**.
+* **NFR02.2:** External API keys (if used) must remain protected and not be exposed directly in public source code.
+
+### NFR03: Availability and Offline Support
+* **NFR03.1:** The application must allow access to "My List" and saved series progress even if the device has no internet connection, automatically syncing pending changes with Firestore as soon as connectivity is restored.
+
+### NFR04: Compatibility
+* **NFR04.1:** The mobile application must be fully responsive and compatible with Android smartphones (version 8.0 or later) and iOS devices (version 15 or later).
+
+---
+
+## 5. Project Structure (Flutter)
+
+To ensure the scalability of **TV Catalog**, the frontend will be structured using a feature-oriented layered architecture (Feature-First) along with an efficient state manager (*Bloc* or *Riverpod*):
 
 ```text
 lib/
 │
-├── core/                  # Configuraciones globales, temas, router y servicios de Firebase
+├── core/                  # Global configurations, themes, router, and Firebase services
 │
-├── features/              # Funcionalidades de la aplicación
-│   ├── auth/              # Autenticación de usuarios
-│   ├── catalog/           # Exploración, búsqueda y detalle de series
-│   └── user_list/         # Favoritos, historial y seguimiento de episodios
+├── features/              # Application functionalities (Features)
+│   ├── auth/              # User authentication
+│   ├── catalog/           # Exploration, search, and series details
+│   └── user_list/         # Favorites, history, and episode tracking
 │
-└── main.dart              # Punto de entrada de la aplicación
+└── main.dart              # Application entry point
